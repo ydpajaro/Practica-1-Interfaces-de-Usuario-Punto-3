@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">BodyMassIndexApp</string>
+    <string name="body_mass_index_bmi">ÍNDICE DE MASA CORPORAL</string>
+    <string name="label_weight_text_view">Peso:</string>
+    <string name="label_weight_text_value">En Kilogramos</string>
+    <string name="label_height_text_view">Altura:</string>
+    <string name="label_height_text_value">En metros</string>
+    <string name="calculate_button">Calcular IMC</string>
+    <string name="IMC_text_view">IMC:</string>
+    <string name="description_text_view">Descripción: </string>
+    <string name="bajo_peso">DESCRIPCIÓN: BAJO PESO</string>
+    <string name="peso_normal">DESCRIPCIÓN: PESO NORMAL</string>
+    <string name="sobre_peso">DESCRIPCIÓN: SOBREPESO</string>
+    <string name="obesidad_tipo_uno">DESCRIPCIÓN: OBESIDAD TIPO 1</string>
+    <string name="obesidad_tipo_dos">DESCRIPCIÓN: OBESIDAD TIPO 2</string>
+    <string name="obesidad_tipo_tres">DESCRIPCIÓN: OBESIDAD TIPO 3</string>
+</resources>
