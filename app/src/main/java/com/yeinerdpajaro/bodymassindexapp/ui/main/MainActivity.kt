@@ -1,11 +1,9 @@
-package com.yeinerdpajaro.bodymassindexapp
+package com.yeinerdpajaro.bodymassindexapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.EditText
+import com.yeinerdpajaro.bodymassindexapp.R
 import com.yeinerdpajaro.bodymassindexapp.databinding.ActivityMainBinding
-import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
 
