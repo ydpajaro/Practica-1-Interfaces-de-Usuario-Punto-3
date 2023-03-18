@@ -2,54 +2,50 @@ package com.yeinerdpajaro.bodymassindexapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.yeinerdpajaro.bodymassindexapp.R
 import com.yeinerdpajaro.bodymassindexapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
-
-
-
-
-
+    private lateinit var mainViewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        mainViewModel.setContext(this)
+
+        val calculoIMCObserver = Observer<String>{ calcularIMC->
+
+            mainBinding.descriptionTextView.text = calcularIMC.toString()
+        }
+        mainViewModel.calcularIMC.observe(this,calculoIMCObserver)
+
+        val valorIMCObserver = Observer<Double>{valorIMC->
+            mainBinding.IMCTextView.text = "${getString(R.string.Total)} ${String.format("%.2f", valorIMC.toDouble())}"
+
+        }
+        mainViewModel.valorIMC.observe(this,valorIMCObserver)
+
 
 
         mainBinding.calculateButton.setOnClickListener {
-            val peso = mainBinding.weightInputEditText.text.toString().toDouble()
-            val altura = mainBinding.heightTextInputEditText.text.toString().toDouble()
-            val total = peso/(altura*altura)
 
-            mainBinding.IMCTextView.setText("IMC: "+ String.format("%.3f",total))
+            if(mainViewModel.realizarValidateNulls(mainBinding.weightInputEditText.text.toString(),mainBinding.heightTextInputEditText.text.toString())){
 
-            if(total > 0 && total <18.5) {
+                mainViewModel.IMC(mainBinding.weightInputEditText.text.toString().toDouble(),mainBinding.heightTextInputEditText.text.toString().toDouble())
 
-                mainBinding.descriptionTextView.text = "${getString(R.string.bajo_peso)}"
-
-            }else if(total >= 18.5 && total <24.9) {
-
-                mainBinding.descriptionTextView.text = "${getString(R.string.peso_normal)}"
-
-            }else if(total >= 24.9 && total <29.9){
-
-                mainBinding.descriptionTextView.text = "${getString(R.string.sobre_peso)}"
-
-            }else if(total >= 29.9 && total <34.9){
-
-                mainBinding.descriptionTextView.text = "${getString(R.string.obesidad_tipo_uno)}"
-            }else if(total >= 34.9 && total <39.9){
-
-                mainBinding.descriptionTextView.text = "${getString(R.string.obesidad_tipo_dos)}"
-            }else if(total >= 39.9){
-
-                mainBinding.descriptionTextView.text = "${getString(R.string.obesidad_tipo_tres)}"
+                mainViewModel.calculoIMC(mainBinding.weightInputEditText.text.toString().toDouble(),mainBinding.heightTextInputEditText.text.toString().toDouble())
+            }else{
+                Toast.makeText(this, "Por favor, ingrese ambos campos", Toast.LENGTH_SHORT).show()
             }
-
 
 
 
