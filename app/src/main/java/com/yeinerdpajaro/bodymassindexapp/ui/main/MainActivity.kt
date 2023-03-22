@@ -20,7 +20,13 @@ class MainActivity : AppCompatActivity() {
 
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        mainViewModel.setContext(this)
+
+
+        val mensajeObserver = Observer<String>{mensaje ->
+            mainBinding.descriptionTextView.text = mensaje.toString()
+        }
+
+        mainViewModel.mensaje.observe(this, mensajeObserver)
 
         val calculoIMCObserver = Observer<String>{ calcularIMC->
 
@@ -38,23 +44,9 @@ class MainActivity : AppCompatActivity() {
 
         mainBinding.calculateButton.setOnClickListener {
 
-           if(mainBinding.weightInputEditText.text.toString().contains(".")){
-                Toast.makeText(getApplicationContext(), "No se permiten puntos ni comas", Toast.LENGTH_SHORT).show()
+            mainViewModel.calculo(mainBinding.weightInputEditText.text.toString(),mainBinding.heightTextInputEditText.text.toString())
 
-            }
-            else if( mainBinding.heightTextInputEditText.text.toString().contains(".") ){
-                Toast.makeText(this, "Por favor, ingrese ambos campos", Toast.LENGTH_SHORT).show()
-            }else if(mainViewModel.realizarValidateNulls(mainBinding.weightInputEditText.text.toString(),mainBinding.heightTextInputEditText.text.toString())){
 
-            mainViewModel.IMC(mainBinding.weightInputEditText.text.toString().toDouble(),mainBinding.heightTextInputEditText.text.toString().toDouble())
-
-            mainViewModel.calculoIMC(mainBinding.weightInputEditText.text.toString().toDouble(),mainBinding.heightTextInputEditText.text.toString().toDouble())
-
-            }
-
-            else {
-                Toast.makeText(this, "Por favor, ingrese ambos campos", Toast.LENGTH_SHORT).show()
-            }
         }
 
         val view = mainBinding.root

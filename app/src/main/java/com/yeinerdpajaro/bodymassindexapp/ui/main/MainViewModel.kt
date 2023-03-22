@@ -8,11 +8,13 @@ import com.yeinerdpajaro.bodymassindexapp.R
 
 class MainViewModel : ViewModel(){
 
-    private var contex: Context? = null
 
-    fun setContext(contex: Context){
-        this.contex = contex
+
+
+    val mensaje: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
     }
+
     val valorIMC: MutableLiveData<Double> by lazy {
         MutableLiveData<Double>()
     }
@@ -30,25 +32,25 @@ class MainViewModel : ViewModel(){
 
         if(total > 0 && total <18.5) {
 
-            calcularIMC.value = contex?.getString(R.string.bajo_peso)
+            calcularIMC.value = "DESCRIPCIÓN: Peso bajo."
 
         }else if(total >= 18.5 && total <24.9) {
 
-            calcularIMC.value = contex?.getString(R.string.peso_normal)
+            calcularIMC.value ="DESCRIPCIÓN: Peso normal."
 
         }else if(total >= 24.9 && total <29.9){
 
-            calcularIMC.value = contex?.getString(R.string.sobre_peso)
+            calcularIMC.value = "DESCRIPCIÓN: Sobre peso."
 
         }else if(total >= 29.9 && total <34.9){
 
-            calcularIMC.value = contex?.getString(R.string.obesidad_tipo_uno)
+            calcularIMC.value = "DESCRIPCIÓN: Obesidad tipo uno."
         }else if(total >= 34.9 && total <39.9){
 
-            calcularIMC.value = contex?.getString(R.string.obesidad_tipo_dos)
+            calcularIMC.value = "DESCRIPCIÓN: Obesidad tipo dos."
         }else if(total >= 39.9){
 
-            calcularIMC.value = contex?.getString(R.string.obesidad_tipo_tres)
+            calcularIMC.value = "DESCRIPCIÓN: Obesidad tipo tres."
         }
 
     }
@@ -56,9 +58,19 @@ class MainViewModel : ViewModel(){
     fun realizarValidateNulls(peso: String, altura: String): Boolean {
         return !(peso.isEmpty() || altura.isEmpty())
     }
+    fun calculo(peso: String, altura: String) {
 
+        if (peso == "" ||altura == "") {
+            mensaje.value = "DESCRIPCIÓN: El campo debe contener un valor."
+        }else if (peso == "." ||altura == "."){
+            mensaje.value = "DESCRIPCIÓN: El campo debe ser un número."
+        }    else {
 
+            this.IMC(peso.toDouble(),altura.toDouble())
+            this.calculoIMC(peso.toDouble(),altura.toDouble())
 
+        }
+    }
 
 
 }
