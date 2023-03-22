@@ -1,6 +1,7 @@
 package com.yeinerdpajaro.bodymassindexapp.ui.main
 
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.yeinerdpajaro.bodymassindexapp.R
@@ -55,5 +56,9 @@ class MainViewModel : ViewModel(){
     fun realizarValidateNulls(peso: String, altura: String): Boolean {
         return !(peso.isEmpty() || altura.isEmpty())
     }
+
+
+
+
 
 }
